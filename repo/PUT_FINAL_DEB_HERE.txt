@@ -1,0 +1,1 @@
+Put the compiled final .deb here, then run: py ../windows_make_repo.py from the main folder OR py windows_make_repo.py if the script is in main folder.
