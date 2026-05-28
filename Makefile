@@ -1,5 +1,6 @@
-TARGET = iphone:clang:12.0:12.0
+TARGET = iphone:clang:12.4:12.0
 ARCHS = arm64
+ADDITIONAL_CFLAGS = -Wno-error -Wno-deprecated
 INSTALL_TARGET_PROCESSES = SpringBoard
 
 include $(THEOS)/makefiles/common.mk
