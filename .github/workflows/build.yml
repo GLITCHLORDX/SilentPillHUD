@@ -1,0 +1,40 @@
+name: Build Tweak
+
+on:
+workflow_dispatch:
+push:
+branches:
+- main
+
+jobs:
+build:
+runs-on: macos-latest
+
+```
+steps:
+  - name: Checkout
+    uses: actions/checkout@v4
+
+  - name: Install Theos
+    run: |
+      git clone --recursive https://github.com/theos/theos.git $HOME/theos
+
+  - name: Setup SDK
+    run: |
+      mkdir -p $HOME/theos/sdks
+      git clone https://github.com/theos/sdks.git
+      cp -R sdks/*.sdk $HOME/theos/sdks/
+
+  - name: Build Package
+    env:
+      THEOS: ${{ github.workspace }}/theos
+    run: |
+      export THEOS=$HOME/theos
+      make clean package FINALPACKAGE=1
+
+  - name: Upload DEB
+    uses: actions/upload-artifact@v4
+    with:
+      name: SilentPillHUD-DEB
+      path: packages/*.deb
+```
