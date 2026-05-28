@@ -3,32 +3,39 @@ name: Build Tweak
 on:
   workflow_dispatch:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: macos-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Install Theos
         run: |
-          git clone --recursive https://github.com/theos/theos.git ~/theos
+          git clone --recursive https://github.com/theos/theos.git $HOME/theos
           echo "THEOS=$HOME/theos" >> $GITHUB_ENV
 
-      - name: Install iOS SDKs
+      - name: Install SDKs
         run: |
-          mkdir -p ~/theos/sdks
           git clone --depth=1 https://github.com/theos/sdks.git /tmp/sdks
-          cp -R /tmp/sdks/*.sdk ~/theos/sdks/
+          mkdir -p $HOME/theos/sdks
+          cp -R /tmp/sdks/*.sdk $HOME/theos/sdks/
 
-      - name: Build deb
+      - name: Fix old SDK module map issue
         run: |
+          find $HOME/theos/sdks -name module.map -execdir mv module.map module.modulemap \; || true
+
+      - name: Build rootful deb
+        run: |
+          export THEOS=$HOME/theos
           make clean package FINALPACKAGE=1
 
-      - name: Upload deb
+      - name: Upload DEB
         uses: actions/upload-artifact@v4
         with:
-          name: SilentPillHUD-DEB
+          name: SilentPillHUD-rootful-DEB
           path: packages/*.deb
