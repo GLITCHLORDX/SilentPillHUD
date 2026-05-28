@@ -29,6 +29,10 @@ jobs:
         run: |
           find $HOME/theos/sdks -name module.map -execdir mv module.map module.modulemap \; || true
 
+      - name: Install ldid
+        run: |
+          brew install ldid
+          
       - name: Build rootful deb
         run: |
           export THEOS=$HOME/theos
