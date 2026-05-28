@@ -1,5 +1,8 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
+#import <objc/message.h>
+#import <Foundation/Foundation.h>
+#import <objc/runtime.h>
 
 @interface SBMediaController : NSObject
 + (instancetype)sharedInstance;
@@ -104,7 +107,7 @@ static void GLHShowSilentPill(void) {
         } completion:nil];
 
         if (glhHideBlock) dispatch_block_cancel(glhHideBlock);
-        glhHideBlock = dispatch_block_create(0, ^{
+        glhHideBlock = dispatch_block_create(DISPATCH_BLOCK_INHERIT_QOS_CLASS, ^{
             [UIView animateWithDuration:0.20 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
                 pill.alpha = 0.0;
                 pill.transform = CGAffineTransformMakeScale(0.96, 0.96);
