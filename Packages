@@ -1,0 +1,15 @@
+Package: com.glitchlord.silentpillhud
+Name: SilentPillHUD
+Version: 1.0.9
+Architecture: iphoneos-arm
+Description: Realistic compact Silent Mode HUD for iOS 12.
+Maintainer: GlitchLord
+Author: GlitchLord
+Section: Tweaks
+Depends: mobilesubstrate, firmware (>= 11.0)
+Filename: com.glitchlord.silentpillhud_1.0.9_iphoneos-arm.deb
+Size: 11528
+Installed-Size: 68
+MD5sum: 62ced23e75311cf6ec59b2f785a2e9dc
+SHA1: 17d6e3d76eb0de2c1c1309a3e18b7aa137bdf53d
+SHA256: dfcab8bb5cf3e6d89ab0903e1324acb648b5f58428bfa29a8e3c3d0a78b615eb
